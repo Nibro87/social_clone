@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SocialClone")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+510a72b9b1308d54a0a83e4fcea80af167ddfe68")]
 [assembly: System.Reflection.AssemblyProductAttribute("SocialClone")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SocialClone")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
