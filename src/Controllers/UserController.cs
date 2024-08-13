@@ -4,8 +4,10 @@ using SocialClone.Models;
 using SocialClone.DTO;
 using Microsoft.AspNetCore.Authorization;
 
+namespace SocialClone.Controllers;
+
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]")]     
 public class UserController : Controller
 {
     private readonly IUserService _userService;

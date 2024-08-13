@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using SocialClone.DTO;
 namespace SocialClone.Models
-{
+{           
     public class User
     {
         [Key]
@@ -28,6 +28,8 @@ namespace SocialClone.Models
         // Many-to-Many Relationship
         [InverseProperty("Users")]
         public virtual ICollection<Role> Roles { get; set; } = new HashSet<Role>();
+
+        public ICollection<Posts> Posts { get; set; } = new HashSet<Posts>();
 
         // Method to get roles as strings
         public List<string> GetRolesAsStrings()
@@ -53,13 +55,13 @@ namespace SocialClone.Models
         }
 
         public User(UserDto userDto)
-    {
+        {
         UserName = userDto.UserName;
         UserPass = BCrypt.Net.BCrypt.HashPassword(userDto.UserPass, BCrypt.Net.BCrypt.GenerateSalt());
         CreatedAt = userDto.CreatedAt;
         UpdatedAt = userDto.UpdatedAt;
         
-    }
+        }
 
         public override string ToString()
         {

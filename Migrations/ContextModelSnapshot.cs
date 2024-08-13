@@ -22,6 +22,38 @@ namespace SocialClone.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("SocialClone.Models.Posts", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("CreatorUserName")
+                        .IsRequired()
+                        .HasColumnType("varchar(60)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorUserName");
+
+                    b.ToTable("Posts");
+                });
+
             modelBuilder.Entity("SocialClone.Models.Role", b =>
                 {
                     b.Property<string>("RoleName")
@@ -82,6 +114,17 @@ namespace SocialClone.Migrations
                     b.ToTable("UserRoles");
                 });
 
+            modelBuilder.Entity("SocialClone.Models.Posts", b =>
+                {
+                    b.HasOne("SocialClone.Models.User", "Creator")
+                        .WithMany("Posts")
+                        .HasForeignKey("CreatorUserName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+                });
+
             modelBuilder.Entity("UserRoles", b =>
                 {
                     b.HasOne("SocialClone.Models.Role", null)
@@ -95,6 +138,11 @@ namespace SocialClone.Migrations
                         .HasForeignKey("UserName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SocialClone.Models.User", b =>
+                {
+                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }

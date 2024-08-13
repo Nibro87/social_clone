@@ -16,6 +16,8 @@ namespace SocialClone.Models;
 
         // Property for DbSet of Role entities
         public DbSet<Role> Roles { get; set; } = null!;
+
+         public DbSet<Posts> Posts { get; set; } = null!;
         
 
         // Optionally override OnModelCreating to configure your models
