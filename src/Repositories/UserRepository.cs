@@ -18,7 +18,7 @@ public class UserRepository : IUserRepository
    
     
     public async Task<User> AddUserAsync(User user)
-{
+    {
     // Add the user entity to the context
     await _context.Users.AddAsync(user);
     
@@ -27,7 +27,16 @@ public class UserRepository : IUserRepository
 
     // Return the added user
     return user;
-}
+    }
+
+    public async Task<Role> AddRoleAsync(Role role)
+    {
+        await _context.Roles.AddAsync(role);
+
+        await _context.SaveChangesAsync();
+
+        return role;
+    }
 
 
     public Task<bool> DeleteUserAsync(int userName)

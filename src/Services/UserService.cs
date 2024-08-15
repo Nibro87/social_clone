@@ -9,14 +9,23 @@ using System.Security.Authentication;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+    
+    public UserService(IUserRepository userRepository)
     {
         _userRepository = userRepository;
     }
-    public void createUser(UserDto userDto)
+    
+    public async void createUser(UserDto userDto)
     {
         var user = new User(userDto);
+        
         _userRepository.AddUserAsync(user);
+    }
+
+    public async Task CreateRoleAsync(RoleDto roleDto)
+    {
+        var role = new Role(roleDto);
+        await _userRepository.AddRoleAsync(role); // Await the asynchronous call
     }
 
     public void DeleteUser()

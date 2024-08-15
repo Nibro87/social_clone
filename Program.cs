@@ -9,6 +9,7 @@ using SocialClone.Models;
 using SocialClone.Service;
 using SocialClone.Repositories;
 using SocialClone.Services;
+using System.Text.Json.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -61,6 +62,12 @@ builder.Services.AddCors(options =>
         });
 });
 
+builder.Services.AddControllers()
+    .AddJsonOptions(opts =>
+    {
+        opts.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+        opts.JsonSerializerOptions.MaxDepth = 64; // Adjust if needed
+    });
 // Add support for MVC
 builder.Services.AddControllersWithViews();
 

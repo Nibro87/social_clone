@@ -20,7 +20,7 @@ public class UserController : Controller
     }
 
     [HttpGet("all")]
-    //[Authorize(Policy = "AdminOnly")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<IActionResult> GetAllUsers()
     {
         try
@@ -44,24 +44,52 @@ public class UserController : Controller
     [HttpPost]
     public IActionResult CreateUser([FromBody] UserDto userDto)
     {
-    if (userDto == null)
-    {
-        return BadRequest("User data is null.");
+        if (userDto == null)
+        {
+            return BadRequest("User data is null.");
+        }
+
+        try
+        {
+            _userService.createUser(userDto);
+
+            // Assuming the GetUserByName method exists and takes a username as a parameter.
+            return CreatedAtAction("GetUserByName", new { username = userDto.UserName }, userDto);
+        }
+        catch (Exception ex)
+        {
+            // Log the exception (ex) here for debugging purposes
+            return StatusCode(StatusCodes.Status500InternalServerError, "A problem happened while handling your request.");
+        }
+
+    
     }
 
-    try
-    {
-        _userService.createUser(userDto);
 
-        // Assuming the GetUserByName method exists and takes a username as a parameter.
-        return CreatedAtAction("GetUserByName", new { username = userDto.UserName }, userDto);
-    }
-    catch (Exception ex)
+    [HttpPost("create-role")]
+    public IActionResult CreateRole([FromBody] RoleDto roleDto)
     {
-        // Log the exception (ex) here for debugging purposes
-        return StatusCode(StatusCodes.Status500InternalServerError, "A problem happened while handling your request.");
-    }
+        if (roleDto == null)
+        {
+            return BadRequest("Role data is null.");
+        }
+
+        try
+        {
+        // Create the role with the provided roleDto
+            _userService.CreateRoleAsync(roleDto);
+
+        // Return a 201 Created status with no content
+            return CreatedAtAction(nameof(CreateRole), new { }, null);
+        }
+        catch (Exception ex)
+        {
+        // Log the exception (ex) for debugging purposes
+        // For example: _logger.LogError(ex, "An error occurred while creating the role.");
+            return StatusCode(StatusCodes.Status500InternalServerError, "A problem occurred while handling your request.");
+        }
 }
+    
 
     
 

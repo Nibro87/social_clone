@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -31,10 +32,16 @@ namespace SocialClone.Models
 
         public ICollection<Posts> Posts { get; set; } = new HashSet<Posts>();
 
+        public ICollection<User> Friendslist {get; set;} = new HashSet<User>();
+
         // Method to get roles as strings
         public List<string> GetRolesAsStrings()
         {
             return Roles.Select(role => role.RoleName).ToList();
+        }
+
+        public void AddFriend(User friend){
+            Friendslist.Add(friend);
         }
 
         // Example method to verify password
@@ -62,6 +69,7 @@ namespace SocialClone.Models
         UpdatedAt = userDto.UpdatedAt;
         
         }
+        
 
         public override string ToString()
         {

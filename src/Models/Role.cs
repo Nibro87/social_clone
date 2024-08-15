@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using SocialClone.DTO;
 
 namespace SocialClone.Models
 {
@@ -30,6 +31,13 @@ namespace SocialClone.Models
         {
             RoleName = roleName;
             CreatedAt = DateTime.UtcNow; // Initialize CreatedAt with the current date and time
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public Role(RoleDto roleDto)
+        {
+            RoleName = roleDto.RoleName;
+            CreatedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
         }
 
