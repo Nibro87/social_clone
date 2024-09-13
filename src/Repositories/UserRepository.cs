@@ -29,6 +29,13 @@ public class UserRepository : IUserRepository
     return user;
     }
 
+    public async Task<User> AddUserWithRole(User user)
+    {
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync();
+        return user;
+    }
+
     public async Task<Role> AddRoleAsync(Role role)
     {
         await _context.Roles.AddAsync(role);
@@ -83,5 +90,6 @@ public class UserRepository : IUserRepository
 
         return user;
     }
-   
+
+  
 }

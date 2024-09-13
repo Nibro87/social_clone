@@ -9,17 +9,18 @@ using System.Security.Authentication;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
-    
-    public UserService(IUserRepository userRepository)
+     private readonly IRoleRepository _roleRepository;
+    public UserService(IUserRepository userRepository,IRoleRepository roleRepository)
     {
         _userRepository = userRepository;
+        _roleRepository = roleRepository;
     }
     
     public async void createUser(UserDto userDto)
     {
         var user = new User(userDto);
         
-        _userRepository.AddUserAsync(user);
+        await _userRepository.AddUserAsync(user);
     }
 
     public async Task CreateRoleAsync(RoleDto roleDto)
@@ -27,6 +28,36 @@ public class UserService : IUserService
         var role = new Role(roleDto);
         await _userRepository.AddRoleAsync(role); // Await the asynchronous call
     }
+
+    public async Task<User> CreateUserWithRoleAsync(UserDto userDto, IEnumerable<string> roleNames)
+        {
+            // Create the user
+            var user = new User(userDto);
+
+            // Get roles from the role repository
+            var roles = new List<Role>();
+            foreach (var roleName in roleNames)
+            {
+                var role = await _roleRepository.GetRoleByNameAsync(roleName);
+                if (role != null)
+                {
+                    roles.Add(role);
+                }
+                else
+                {
+                    // Optionally handle cases where the role does not exist
+                    // For simplicity, you might want to add logic to create new roles
+                }
+            }
+
+            // Assign roles to the user
+            user.Roles = roles;
+
+            // Save the user to the repository
+            await _userRepository.AddUserAsync(user);
+
+            return user;
+        }
 
     public void DeleteUser()
     {
@@ -61,5 +92,5 @@ public class UserService : IUserService
         throw new NotImplementedException();
     }
 
-
+    
 }

@@ -25,6 +25,7 @@ builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<PostService>();
 builder.Services.AddScoped<IPostRepository,PostsRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 
 // Add JWT authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

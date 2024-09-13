@@ -32,7 +32,7 @@ namespace SocialClone.Models
 
         public ICollection<Posts> Posts { get; set; } = new HashSet<Posts>();
 
-        public ICollection<User> Friendslist {get; set;} = new HashSet<User>();
+        
 
         // Method to get roles as strings
         public List<string> GetRolesAsStrings()
@@ -40,8 +40,9 @@ namespace SocialClone.Models
             return Roles.Select(role => role.RoleName).ToList();
         }
 
-        public void AddFriend(User friend){
-            Friendslist.Add(friend);
+        public void AddRole (Role role)
+        {
+            Roles.Add(role);
         }
 
         // Example method to verify password

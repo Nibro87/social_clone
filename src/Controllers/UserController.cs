@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SocialClone.Models;
 using SocialClone.DTO;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Collections.Generic;
 namespace SocialClone.Controllers;
 
 [ApiController]
@@ -64,6 +64,29 @@ public class UserController : Controller
 
     
     }
+
+[HttpPost("create-user")]
+public async Task<IActionResult> CreateUserWithRoles([FromBody] UserDto userDto)
+{
+    if (userDto == null || string.IsNullOrEmpty(userDto.UserName) || string.IsNullOrEmpty(userDto.UserPass))
+    {
+        return BadRequest("Invalid user data.");
+    }
+
+    // Create a user entity from the provided UserDto
+    var userDtoWithTimestamps = new UserDto
+    {
+        UserName = userDto.UserName,
+        UserPass = userDto.UserPass,  // Assuming 'Password' is the correct property name
+        CreatedAt = DateTime.UtcNow,
+        UpdatedAt = DateTime.UtcNow
+    };
+
+    // Assuming the request has a property 'RoleNames' that contains the roles
+    var user = await _userService.CreateUserWithRoleAsync(userDtoWithTimestamps, userDto.Roles);
+
+    return CreatedAtAction("GetUserByName", new { userName = user.UserName }, user);
+}
 
 
     [HttpPost("create-role")]

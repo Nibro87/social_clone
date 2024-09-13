@@ -41,6 +41,12 @@ namespace SocialClone.Models
             UpdatedAt = DateTime.UtcNow;
         }
 
-        
+        public override string ToString()
+        {
+            return $"RoleName: {RoleName}, CreatedAt: {CreatedAt},UpdatedAt: {UpdatedAt}";
+        }
+
+       
     }
+
 }

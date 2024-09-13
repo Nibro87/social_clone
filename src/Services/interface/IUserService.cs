@@ -7,6 +7,7 @@ public interface IUserService
     UserDto GetUserByName(string name);
     Task<User>GetVerifiedUser(string name,string password);
     void createUser(UserDto userDto);
+    Task<User> CreateUserWithRoleAsync(UserDto userDto,IEnumerable<string> roleNames);
 
     Task CreateRoleAsync(RoleDto roleDto);
     void UpDateUser();

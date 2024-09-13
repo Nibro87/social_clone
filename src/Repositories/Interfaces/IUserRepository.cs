@@ -7,6 +7,7 @@ public interface IUserRepository
     Task<User> GetUserByNameAsync(string userName);
     Task<User> GetVerifiedUser(string userName, string password);
     Task<User> AddUserAsync(User user);
+    Task<User> AddUserWithRole(User user);
     Task <Role> AddRoleAsync(Role role);
     Task<User> UpdateUserAsync(User userDto);
     Task<bool> DeleteUserAsync(int userName);
